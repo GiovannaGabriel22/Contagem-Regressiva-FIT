@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Contagem Regressiva FIT</title>
+  <style>
+    :root {
+      --roxo-fit: #4B0082;
+      --branco: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--branco);
+      color: var(--roxo-fit);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: var(--roxo-fit);
+    }
+
+    #contador {
+      display: flex;
+      gap: 20px;
+      font-size: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .bloco {
+      background-color: var(--roxo-fit);
+      color: var(--branco);
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      min-width: 100px;
+    }
+
+    .numero {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .legenda {
+      font-size: 14px;
+      margin-top: 5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>9º FIT: FORÚM INTERNACIONAL DA TRIBUTAÇÃO</h1>
+
+  <div id="contador">
+    <div class="bloco">
+      <div class="numero" id="dias">00</div>
+      <div class="legenda">dias</div>
+    </div>
+    <div class="bloco">
+      <div class="numero" id="horas">00</div>
+      <div class="legenda">horas</div>
+    </div>
+    <div class="bloco">
+      <div class="numero" id="minutos">00</div>
+      <div class="legenda">min</div>
+    </div>
+    <div class="bloco">
+      <div class="numero" id="segundos">00</div>
+      <div class="legenda">seg</div>
+    </div>
+  </div>
+
+  <script>
+    const destino = new Date("2025-09-10T09:00:00");
+
+    const atualizarContador = () => {
+      const agora = new Date().getTime();
+      const distancia = destino - agora;
+
+      if (distancia <= 0) {
+        document.getElementById("contador").innerHTML = "<h2>⏰ O FIT começou!</h2>";
+        clearInterval(intervalo);
+        return;
+      }
+
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("dias").textContent = dias.toString().padStart(2, '0');
+      document.getElementById("horas").textContent = horas.toString().padStart(2, '0');
+      document.getElementById("minutos").textContent = minutos.toString().padStart(2, '0');
+      document.getElementById("segundos").textContent = segundos.toString().padStart(2, '0');
+    };
+
+    const intervalo = setInterval(atualizarContador, 1000);
+    atualizarContador();
+  </script>
+</body>
+</html>
